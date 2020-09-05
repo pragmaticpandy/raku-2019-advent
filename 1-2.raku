@@ -7,14 +7,15 @@ sub calcFuel(Int $mass) returns Int {
 my Int $fuel = 0;
 
 for 'input-1-1.txt'.IO.lines -> $line {
-    $fuel += calcFuel :10($line);
-}
 
-my Int $fuelForFuel = calcFuel $fuel;
+    my Int $moduleFuel = calcFuel :10($line);
+    my Int $fuelForModuleFuel = calcFuel $moduleFuel;
+    while $fuelForModuleFuel > 0 {
+        $moduleFuel += $fuelForModuleFuel;
+        $fuelForModuleFuel = calcFuel $fuelForModuleFuel;
+    }
 
-while $fuelForFuel > 0 {
-    $fuel += $fuelForFuel;
-    $fuelForFuel = calcFuel $fuelForFuel;
+    $fuel += $moduleFuel;
 }
 
 say $fuel;

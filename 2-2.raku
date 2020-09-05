@@ -1,17 +1,15 @@
 use v6;
 
-my $progString = "input-2-1.txt".IO.slurp;
-
-my @originalProg = map { :10($_) }, split(',', $progString);
+my Int @originalProg = map { :10($_) }, split(',', "input-2-1.txt".IO.slurp.trim);
 
 say getAnswer(@originalProg);
 
-sub getAnswer(@originalProg) returns Int {
-    my @range = 0..99;
+sub getAnswer(Int @originalProg) returns Int {
+    my Int @range = 0..99;
     for @range -> $noun {
         for @range -> $verb {
             
-            my @prog = @originalProg.clone;
+            my Int @prog = @originalProg.clone;
             @prog[1] = $noun;
             @prog[2] = $verb;
             executeProgAt(0, @prog);
